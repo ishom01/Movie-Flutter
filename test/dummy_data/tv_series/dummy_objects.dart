@@ -1,59 +1,116 @@
-import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/episode_model.dart';
+import 'package:ditonton/data/models/genre_model.dart';
+import 'package:ditonton/data/models/season_model.dart';
+import 'package:ditonton/data/models/tv_series_detail_model.dart';
+import 'package:ditonton/data/models/tv_series_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
 
-final testMovie = Movie(
+final testTvSeries = TvSeriesModel(
   adult: false,
-  backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-  genreIds: [14, 28],
-  id: 557,
-  originalTitle: 'Spider-Man',
-  overview:
-      'After being bitten by a genetically altered spider, nerdy high school student Peter Parker is endowed with amazing powers to become the Amazing superhero known as Spider-Man.',
-  popularity: 60.441,
-  posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
-  releaseDate: '2002-05-01',
-  title: 'Spider-Man',
-  video: false,
-  voteAverage: 7.2,
-  voteCount: 13507,
-);
-
-final testMovieList = [testMovie];
-
-final testMovieDetail = MovieDetail(
-  adult: false,
-  backdropPath: 'backdropPath',
-  genres: [Genre(id: 1, name: 'Action')],
+  backdropPath: 'path.jpg',
+  genreIds: [
+    1,
+    2,
+  ],
   id: 1,
-  originalTitle: 'originalTitle',
-  overview: 'overview',
-  posterPath: 'posterPath',
-  releaseDate: 'releaseDate',
-  runtime: 120,
-  title: 'title',
-  voteAverage: 1,
+  originCountry: [
+    "English"
+  ],
+  originalLanguage: "English",
+  originalName: "Sample Name",
+  overview: "Description",
+  popularity: 120,
+  posterPath: "path.jpg",
+  firstAirDate: "2012-12-12",
+  name: "Sample Name",
   voteCount: 1,
+  voteAverage: 5.0
 );
 
-final testWatchlistMovie = Movie.watchlist(
+final testSeriesList = [testTvSeries];
+
+final tvSeriesGenre1 = Genre(id: 1, name: "Genre 1");
+
+final tvSeriesGenre2 = Genre(id: 2, name: "Genre 2");
+
+final tvSeriesEpisode1 = EpisodeModel(
+  airDate: "2012-12-12",
+  episodeNumber: 1,
+  episodeType: "type",
   id: 1,
-  title: 'title',
-  posterPath: 'posterPath',
-  overview: 'overview',
+  name: "Episode 1",
+  overview: "Overview episode 1",
+  productionCode: "123",
+  runtime: 45,
+  seasonNumber: 1,
+  showId: 1,
+  stillPath: "path.jpg",
+  voteAverage: 5.0,
+  voteCount: 1
 );
 
-final testMovieTable = MovieTable(
+final tvSeriesSeason = SeasonModel(
+  airDate: "2012-12-12",
+  episodeCount: 2,
   id: 1,
-  title: 'title',
-  posterPath: 'posterPath',
-  overview: 'overview',
+  name: "Season 1",
+  overview: "Overview season 1",
+  posterPath: "path.jpg",
+  seasonNumber: 1,
+  voteAverage: 10.0
 );
 
-final testMovieMap = {
-  'id': 1,
-  'overview': 'overview',
-  'posterPath': 'posterPath',
-  'title': 'title',
-};
+final tvSeriesEpisode2 = EpisodeModel(
+    airDate: "2012-12-12",
+    episodeNumber: 2,
+    episodeType: "type",
+    id: 1,
+    name: "Episode 2",
+    overview: "Overview episode 2",
+    productionCode: "123",
+    runtime: 45,
+    seasonNumber: 1,
+    showId: 1,
+    stillPath: "path.jpg",
+    voteAverage: 5.0,
+    voteCount: 1
+);
+
+final testSeriesDetail = TvSeriesDetailResponse(
+  adult: false,
+  backdropPath: "path.jpg",
+  firstAirDate: "2012-12-12",
+  genres: [
+    GenreModel(id: 1, name: "Genre 1"),
+    GenreModel(id: 2, name: "Genre 2")
+  ],
+  homepage: "google.com",
+  id: 1,
+  languages: [
+    "English"
+  ],
+  episodeRunTime: [
+    12,
+    12
+  ],
+  inProduction: false,
+  originalLanguage: "English",
+  lastAirDate: "2012-12-12",
+  lastEpisodeToAir: tvSeriesEpisode1,
+  name: "Series 1",
+  nextEpisodeToAir: tvSeriesEpisode2,
+  numberOfEpisodes: 2,
+  numberOfSeasons:  1,
+  originalName: "Series 1",
+  overview: "Overview series",
+  popularity: 2.0,
+  posterPath: "path.jpg",
+  seasons: [
+    tvSeriesSeason
+  ],
+  status: "Status",
+  tagline: "Tagline",
+  type: "type",
+  voteAverage: 2.0,
+  voteCount: 1
+);

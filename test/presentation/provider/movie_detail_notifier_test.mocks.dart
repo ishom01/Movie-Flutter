@@ -6,9 +6,11 @@ import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
 import 'package:ditonton/common/failure.dart' as _i6;
+import 'package:ditonton/common/home_enum.dart' as _i6;
 import 'package:ditonton/domain/entities/movie.dart' as _i9;
 import 'package:ditonton/domain/entities/movie_detail.dart' as _i7;
 import 'package:ditonton/domain/repositories/movie_repository.dart' as _i2;
+import 'package:ditonton/domain/repositories/tv_series_repository.dart' as _i2;
 import 'package:ditonton/domain/usecases/get_movie_detail.dart' as _i4;
 import 'package:ditonton/domain/usecases/get_movie_recommendations.dart' as _i8;
 import 'package:ditonton/domain/usecases/get_watchlist_status.dart' as _i10;
@@ -23,6 +25,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 
 class _FakeMovieRepository extends _i1.Fake implements _i2.MovieRepository {}
+
+class _FakeTvSeriesRepository extends _i1.Fake
+    implements _i2.TvSeriesRepository {}
 
 class _FakeEither<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 
@@ -77,12 +82,25 @@ class MockGetWatchListStatus extends _i1.Mock
   }
 
   @override
+  _i2.MovieRepository get movieRepository =>
+      (super.noSuchMethod(Invocation.getter(#movieRepository),
+          returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
+
+  @override
+  // TODO: implement seriesRepository
+  _i2.TvSeriesRepository get seriesRepository =>
+      (super.noSuchMethod(Invocation.getter(#seriesRepository),
+          returnValue: _FakeTvSeriesRepository()) as _i2.TvSeriesRepository);
+
+  @override
   _i2.MovieRepository get repository =>
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
+
+
   @override
-  _i5.Future<bool> execute(int? id) =>
-      (super.noSuchMethod(Invocation.method(#execute, [id]),
+  _i5.Future<bool> execute(int? id, _i6.DataType type) =>
+      (super.noSuchMethod(Invocation.method(#execute, [id, type]),
           returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
 }
 

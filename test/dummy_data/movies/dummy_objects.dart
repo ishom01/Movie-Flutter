@@ -1,3 +1,4 @@
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
@@ -44,8 +45,9 @@ final testWatchlistMovie = Movie.watchlist(
   overview: 'overview',
 );
 
-final testMovieTable = MovieTable(
+final testMovieTable = WatchlistTable(
   id: 1,
+  type: DataType.Movie.index,
   title: 'title',
   posterPath: 'posterPath',
   overview: 'overview',
@@ -54,6 +56,7 @@ final testMovieTable = MovieTable(
 final testMovieMap = {
   'id': 1,
   'overview': 'overview',
+  'type': DataType.Movie.index,
   'posterPath': 'posterPath',
   'title': 'title',
 };

@@ -32,6 +32,4 @@ class Season extends Equatable {
     seasonNumber,
     voteAverage
   ];
-
-
 }

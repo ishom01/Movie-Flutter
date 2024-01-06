@@ -1,29 +1,47 @@
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/domain/entities/tv_series_detail.dart';
 import 'package:equatable/equatable.dart';
 
-class MovieTable extends Equatable {
+import '../../common/home_enum.dart';
+
+class WatchlistTable extends Equatable {
   final int id;
+  final int type;
   final String? title;
   final String? posterPath;
   final String? overview;
 
-  MovieTable({
+  WatchlistTable({
     required this.id,
+    required this.type,
     required this.title,
     required this.posterPath,
-    required this.overview,
+    required this.overview
   });
 
-  factory MovieTable.fromEntity(MovieDetail movie) => MovieTable(
+  factory WatchlistTable.fromEntity(MovieDetail movie) => WatchlistTable(
         id: movie.id,
         title: movie.title,
+        type: DataType.Movie.index,
         posterPath: movie.posterPath,
         overview: movie.overview,
       );
 
-  factory MovieTable.fromMap(Map<String, dynamic> map) => MovieTable(
+  factory WatchlistTable.fromSeriesEntity(
+      TvSeriesDetail series
+  ) => WatchlistTable(
+        id: series.id,
+        title: series.name,
+        type: DataType.Movie.index,
+        posterPath: series.posterPath,
+        overview: series.overview,
+      );
+
+  factory WatchlistTable.fromMap(Map<String, dynamic> map) => WatchlistTable(
         id: map['id'],
+        type: map['type'],
         title: map['title'],
         posterPath: map['posterPath'],
         overview: map['overview'],
@@ -32,6 +50,7 @@ class MovieTable extends Equatable {
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
+        'type': type,
         'posterPath': posterPath,
         'overview': overview,
       };
@@ -43,7 +62,13 @@ class MovieTable extends Equatable {
         title: title,
       );
 
+  TvSeries toSeriesEntity() => TvSeries.watchlist(
+        id: id,
+        overview: overview,
+        posterPath: posterPath,
+        name: title,
+      );
+
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, title, posterPath, overview];
+  List<Object?> get props => [id, title, type, posterPath, overview];
 }

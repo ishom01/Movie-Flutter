@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/datasources/watch_list_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/watchlist.dart';
 import 'package:ditonton/domain/repositories/movie_repository.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
@@ -117,12 +119,12 @@ class MovieRepositoryImpl implements MovieRepository {
 
   @override
   Future<bool> isAddedToWatchlist(int id) async {
-    final result = await localDataSource.getMovieById(id);
+    final result = await localDataSource.getWatchListById(id, DataType.Movie);
     return result != null;
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
+  Future<Either<Failure, List<Watchlist>>> getWatchlistMovies() async {
     final result = await localDataSource.getWatchlistMovies();
     return Right(result.map((data) => data.toEntity()).toList());
   }

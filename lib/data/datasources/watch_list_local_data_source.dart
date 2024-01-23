@@ -1,11 +1,12 @@
 import 'package:ditonton/common/exception.dart';
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 
 abstract class WatchListLocalDataSource {
   Future<String> insertWatchlist(WatchlistTable movie);
   Future<String> removeWatchlist(WatchlistTable movie);
-  Future<WatchlistTable?> getMovieById(int id);
+  Future<WatchlistTable?> getWatchListById(int id, DataType type);
   Future<List<WatchlistTable>> getWatchlistMovies();
 }
 
@@ -35,8 +36,8 @@ class MovieLocalDataSourceImpl implements WatchListLocalDataSource {
   }
 
   @override
-  Future<WatchlistTable?> getMovieById(int id) async {
-    final result = await databaseHelper.getMovieById(id);
+  Future<WatchlistTable?> getWatchListById(int id, DataType type) async {
+    final result = await databaseHelper.getWatchlistById(id, type);
     if (result != null) {
       return WatchlistTable.fromMap(result);
     } else {

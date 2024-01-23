@@ -6,7 +6,8 @@ import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/movie_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/pages/search_movie_page.dart';
+import 'package:ditonton/presentation/pages/search_series_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_series_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
@@ -83,7 +84,11 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              if (_selectedHomeTypePage == DataType.Movie) {
+                Navigator.pushNamed(context, SearchMoviePage.ROUTE_NAME);
+              } else {
+                Navigator.pushNamed(context, SearchSeriesPage.ROUTE_NAME);
+              }
             },
             icon: Icon(Icons.search),
           )

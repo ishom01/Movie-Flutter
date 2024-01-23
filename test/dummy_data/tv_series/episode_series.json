@@ -1,0 +1,27 @@
+{
+  "_id": "5256e84719c2956ff60edf2f",
+  "air_date": "1999-01-31",
+  "episodes": [
+    {
+      "air_date": "1999-01-31",
+      "episode_number": 1,
+      "episode_type": "standard",
+      "id": 66050,
+      "name": "Episode 1",
+      "overview": "Description episode 1",
+      "production_code": "1ACX01",
+      "runtime": 22,
+      "season_number": 1,
+      "show_id": 1434,
+      "still_path": "/z9Jd3tN6lclBKhap2xC2Ttq7PPf.jpg",
+      "vote_average": 6.94,
+      "vote_count": 50
+    }
+  ],
+  "name": "Season 1",
+  "overview": "",
+  "id": 3821,
+  "poster_path": "/jionPk3YATIRj5P6HdbLPkz5Ff7.jpg",
+  "season_number": 1,
+  "vote_average": 7.1
+}

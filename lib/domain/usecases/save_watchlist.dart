@@ -9,10 +9,7 @@ class SaveWatchlist {
   final MovieRepository movieRepository;
   final TvSeriesRepository seriesRepository;
 
-  SaveWatchlist({
-    required this.movieRepository,
-    required this.seriesRepository
-  });
+  SaveWatchlist(this.movieRepository, this.seriesRepository);
 
   Future<Either<Failure, String>> saveMovie(MovieDetail movie) {
     return movieRepository.saveWatchlist(movie);

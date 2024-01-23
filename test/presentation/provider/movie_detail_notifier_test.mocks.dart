@@ -9,6 +9,7 @@ import 'package:ditonton/common/failure.dart' as _i6;
 import 'package:ditonton/common/home_enum.dart' as _i6;
 import 'package:ditonton/domain/entities/movie.dart' as _i9;
 import 'package:ditonton/domain/entities/movie_detail.dart' as _i7;
+import 'package:ditonton/domain/entities/tv_series_detail.dart' as _i7;
 import 'package:ditonton/domain/repositories/movie_repository.dart' as _i2;
 import 'package:ditonton/domain/repositories/tv_series_repository.dart' as _i2;
 import 'package:ditonton/domain/usecases/get_movie_detail.dart' as _i4;
@@ -87,15 +88,9 @@ class MockGetWatchListStatus extends _i1.Mock
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
 
   @override
-  // TODO: implement seriesRepository
   _i2.TvSeriesRepository get seriesRepository =>
       (super.noSuchMethod(Invocation.getter(#seriesRepository),
           returnValue: _FakeTvSeriesRepository()) as _i2.TvSeriesRepository);
-
-  @override
-  _i2.MovieRepository get repository =>
-      (super.noSuchMethod(Invocation.getter(#repository),
-          returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
 
 
   @override
@@ -113,15 +108,30 @@ class MockSaveWatchlist extends _i1.Mock implements _i11.SaveWatchlist {
   }
 
   @override
-  _i2.MovieRepository get repository =>
+  _i2.MovieRepository get movieRepository =>
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
+
   @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> execute(_i7.MovieDetail? movie) =>
+  _i2.TvSeriesRepository get seriesRepository =>
+      (super.noSuchMethod(Invocation.getter(#repository),
+          returnValue: _FakeTvSeriesRepository()) as _i2.TvSeriesRepository);
+
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, String>> saveMovie(
+      _i7.MovieDetail movie) =>
       (super.noSuchMethod(Invocation.method(#execute, [movie]),
-              returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
-                  _FakeEither<_i6.Failure, String>()))
-          as _i5.Future<_i3.Either<_i6.Failure, String>>);
+          returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
+              _FakeEither<_i6.Failure, String>()))
+      as _i5.Future<_i3.Either<_i6.Failure, String>>);
+
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, String>> saveSeries(
+      _i7.TvSeriesDetail detail) =>
+      (super.noSuchMethod(Invocation.method(#execute, [detail]),
+          returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
+              _FakeEither<_i6.Failure, String>()))
+      as _i5.Future<_i3.Either<_i6.Failure, String>>);
 }
 
 /// A class which mocks [RemoveWatchlist].
@@ -133,13 +143,29 @@ class MockRemoveWatchlist extends _i1.Mock implements _i12.RemoveWatchlist {
   }
 
   @override
-  _i2.MovieRepository get repository =>
+  _i2.MovieRepository get movieRepository =>
       (super.noSuchMethod(Invocation.getter(#repository),
           returnValue: _FakeMovieRepository()) as _i2.MovieRepository);
+
   @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> execute(_i7.MovieDetail? movie) =>
+  _i2.TvSeriesRepository get seriesRepository =>
+      (super.noSuchMethod(Invocation.getter(#repository),
+          returnValue: _FakeTvSeriesRepository()) as _i2.TvSeriesRepository);
+
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, String>> removeMovie(
+      _i7.MovieDetail movie) =>
       (super.noSuchMethod(Invocation.method(#execute, [movie]),
-              returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
-                  _FakeEither<_i6.Failure, String>()))
-          as _i5.Future<_i3.Either<_i6.Failure, String>>);
+          returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
+              _FakeEither<_i6.Failure, String>()))
+      as _i5.Future<_i3.Either<_i6.Failure, String>>);
+
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, String>> removeSeries(
+      _i7.TvSeriesDetail seriesDetail) =>
+      (super.noSuchMethod(Invocation.method(#execute, [seriesDetail]),
+          returnValue: Future<_i3.Either<_i6.Failure, String>>.value(
+              _FakeEither<_i6.Failure, String>()))
+      as _i5.Future<_i3.Either<_i6.Failure, String>>);
+
 }

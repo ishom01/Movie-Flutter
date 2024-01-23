@@ -33,13 +33,6 @@ class TvSeries extends Equatable {
     required this.voteCount,
   });
 
-  TvSeries.watchlist({
-    required this.id,
-    required this.overview,
-    required this.posterPath,
-    required this.name,
-  });
-
   @override
   List<Object?> get props => [
     adult,

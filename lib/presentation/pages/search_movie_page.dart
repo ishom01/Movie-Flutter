@@ -5,14 +5,14 @@ import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
+class SearchMoviePage extends StatelessWidget {
+  static const ROUTE_NAME = '/search/movie';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: Text('Search Movie'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

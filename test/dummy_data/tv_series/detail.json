@@ -25,7 +25,7 @@
   "last_episode_to_air": {
     "id": 1,
     "name": "Episode 1",
-    "overview": "Descrpition",
+    "overview": "Description",
     "vote_average": 7.0,
     "vote_count": 1,
     "air_date": "2023-12-17",
@@ -41,7 +41,7 @@
   "next_episode_to_air": {
     "id": 2,
     "name": "Episode 2",
-    "overview": "Sample Descrpition",
+    "overview": "Sample Description",
     "vote_average": 0.0,
     "vote_count": 0,
     "air_date": "2024-03-06",
@@ -55,9 +55,6 @@
   },
   "number_of_episodes": 10,
   "number_of_seasons": 2,
-  "origin_country": [
-    "US"
-  ],
   "original_language": "en",
   "original_name": "Sample original name",
   "overview": "Sample Overview",

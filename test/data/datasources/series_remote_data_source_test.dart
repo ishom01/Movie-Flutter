@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/datasources/tv_series_remote_data_source.dart';
+import 'package:ditonton/data/models/episode_response.dart';
 import 'package:ditonton/data/models/tv_series_detail_model.dart';
 import 'package:ditonton/data/models/tv_series_response.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,6 +100,67 @@ void main() {
           .thenAnswer((_) async => http.Response('Not Found', 404));
 
       final call = dataSource.getTopRatedSeries();
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('get Search Series', () {
+    final tvSeries = TvSeriesResponse.fromJson(
+        json.decode(readJson('dummy_data/tv_series/search_series.json'))
+    ).tvSeries;
+    final query = "spider";
+
+    test('should return list of Series Model when the response is 200',
+            () async {
+          when(mockHttpClient.get(Uri.parse(
+              '$BASE_URL/search/tv?$API_KEY&query=$query')))
+              .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/tv_series/search_series.json'),
+                  200));
+          // act
+          final result = await dataSource.searchSeries(query);
+          // assert
+          expect(result, equals(tvSeries));
+          // act
+        });
+
+    test('should throw a ServerException when response code 404', () async {
+      when (mockHttpClient
+          .get(Uri.parse('$BASE_URL/search/tv?$API_KEY&query=$query')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+
+      final call = dataSource.searchSeries(query);
+      expect(() => call, throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('get Series Episode', () {
+    final episodes = EpisodeResponse.fromJson(
+        json.decode(readJson('dummy_data/tv_series/episode_series.json'))
+    ).episodes;
+    final id = 1;
+    final season = 1;
+
+    test('should return list of Series Model when the response is 200',
+            () async {
+          when(mockHttpClient.get(Uri.parse(
+              '$BASE_URL/tv/$id}/season/$season}?$API_KEY')))
+              .thenAnswer((_) async =>
+              http.Response(readJson('dummy_data/tv_series/episode_series.json'),
+                  200));
+          // act
+          final result = await dataSource.getEpisodes(id, season);
+          // assert
+          expect(result, equals(episodes));
+          // act
+        });
+
+    test('should throw a ServerException when response code 404', () async {
+      when (mockHttpClient
+          .get(Uri.parse('$BASE_URL/tv/$id}/season/$season}?$API_KEY')))
+          .thenAnswer((_) async => http.Response('Not Found', 404));
+
+      final call = dataSource.getEpisodes(id, season);
       expect(() => call, throwsA(isA<ServerException>()));
     });
   });

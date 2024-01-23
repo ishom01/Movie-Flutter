@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_model.dart';
@@ -390,7 +391,8 @@ void main() {
     test('should return watch status whether data is found', () async {
       // arrange
       final tId = 1;
-      when(mockLocalDataSource.getMovieById(tId)).thenAnswer((_) async => null);
+      when(mockLocalDataSource.getWatchListById(tId, DataType.Movie))
+          .thenAnswer((_) async => null);
       // act
       final result = await repository.isAddedToWatchlist(tId);
       // assert

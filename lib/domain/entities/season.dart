@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 class Season extends Equatable {
   final int id;
   final String name;
-  final String airDate;
+  final String? airDate;
   final int episodeCount;
-  final String overview;
-  final String posterPath;
+  final String? overview;
+  final String? posterPath;
   final int seasonNumber;
   final double voteAverage;
 

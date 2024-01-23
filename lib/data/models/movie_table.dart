@@ -1,7 +1,6 @@
-import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
 import 'package:ditonton/domain/entities/tv_series_detail.dart';
+import 'package:ditonton/domain/entities/watchlist.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../common/home_enum.dart';
@@ -34,7 +33,7 @@ class WatchlistTable extends Equatable {
   ) => WatchlistTable(
         id: series.id,
         title: series.name,
-        type: DataType.Movie.index,
+        type: DataType.TvSeries.index,
         posterPath: series.posterPath,
         overview: series.overview,
       );
@@ -55,18 +54,12 @@ class WatchlistTable extends Equatable {
         'overview': overview,
       };
 
-  Movie toEntity() => Movie.watchlist(
+  Watchlist toEntity() => Watchlist(
         id: id,
         overview: overview,
-        posterPath: posterPath,
+        path: posterPath,
         title: title,
-      );
-
-  TvSeries toSeriesEntity() => TvSeries.watchlist(
-        id: id,
-        overview: overview,
-        posterPath: posterPath,
-        name: title,
+        type: type
       );
 
   @override

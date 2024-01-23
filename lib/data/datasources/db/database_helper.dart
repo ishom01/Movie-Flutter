@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/models/movie_table.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -57,12 +58,12 @@ class DatabaseHelper {
     );
   }
 
-  Future<Map<String, dynamic>?> getMovieById(int id) async {
+  Future<Map<String, dynamic>?> getWatchlistById(int id, DataType type) async {
     final db = await database;
     final results = await db!.query(
       _tblWatchlist,
-      where: 'id = ?',
-      whereArgs: [id],
+      where: 'id = ? AND type = ?',
+      whereArgs: [id, type.index],
     );
 
     if (results.isNotEmpty) {

@@ -8,6 +8,7 @@ import 'dart:typed_data' as _i19;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:ditonton/common/failure.dart' as _i8;
+import 'package:ditonton/common/home_enum.dart' as _i21;
 import 'package:ditonton/data/datasources/db/database_helper.dart' as _i15;
 import 'package:ditonton/data/datasources/watch_list_local_data_source.dart' as _i13;
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart'
@@ -19,8 +20,10 @@ import 'package:ditonton/data/models/movie_model.dart' as _i12;
 import 'package:ditonton/data/models/movie_table.dart' as _i14;
 import 'package:ditonton/data/models/tv_series_model.dart' as _i15;
 import 'package:ditonton/data/models/tv_series_detail_model.dart' as _i16;
+import 'package:ditonton/data/models/episode_model.dart' as _i16;
 import 'package:ditonton/domain/entities/movie.dart' as _i9;
 import 'package:ditonton/domain/entities/tv_series.dart' as _i9;
+import 'package:ditonton/domain/entities/watchlist.dart' as _i9;
 import 'package:ditonton/domain/entities/movie_detail.dart' as _i10;
 import 'package:ditonton/domain/entities/tv_series_detail.dart' as _i10;
 import 'package:ditonton/domain/repositories/movie_repository.dart' as _i6;
@@ -116,11 +119,11 @@ class MockMovieRepository extends _i1.Mock implements _i6.MovieRepository {
       (super.noSuchMethod(Invocation.method(#isAddedToWatchlist, [id]),
           returnValue: Future<bool>.value(false)) as _i7.Future<bool>);
   @override
-  _i7.Future<_i2.Either<_i8.Failure, List<_i9.Movie>>> getWatchlistMovies() =>
+  _i7.Future<_i2.Either<_i8.Failure, List<_i9.Watchlist>>> getWatchlistMovies() =>
       (super.noSuchMethod(Invocation.method(#getWatchlistMovies, []),
-          returnValue: Future<_i2.Either<_i8.Failure, List<_i9.Movie>>>.value(
-              _FakeEither<_i8.Failure, List<_i9.Movie>>())) as _i7
-          .Future<_i2.Either<_i8.Failure, List<_i9.Movie>>>);
+          returnValue: Future<_i2.Either<_i8.Failure, List<_i9.Watchlist>>>
+              .value(_FakeEither<_i8.Failure, List<_i9.Watchlist>>())) as _i7
+          .Future<_i2.Either<_i8.Failure, List<_i9.Watchlist>>>);
 }
 
 class MockTvSeriesRepository extends _i1.Mock
@@ -287,6 +290,13 @@ class MockTvSeriesRemoteDataSource extends _i1.Mock
           returnValue: Future<List<_i15.TvSeriesModel>>
               .value(<_i15.TvSeriesModel>[]))
       as _i7.Future<List<_i15.TvSeriesModel>>);
+
+  @override
+  _i7.Future<List<_i16.EpisodeModel>> getEpisodes(int id, int season) =>
+      (super.noSuchMethod(Invocation.method(#searchSeries, [id, season]),
+          returnValue: Future<List<_i16.EpisodeModel>>
+              .value(<_i16.EpisodeModel>[]))
+      as _i7.Future<List<_i16.EpisodeModel>>);
 }
 
 /// A class which mocks [MovieLocalDataSource].
@@ -306,14 +316,16 @@ class MockWatchlistLocalDataSource extends _i1.Mock
   _i7.Future<String> removeWatchlist(_i14.WatchlistTable? movie) =>
       (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
           returnValue: Future<String>.value('')) as _i7.Future<String>);
+
   @override
-  _i7.Future<_i14.WatchlistTable?> getMovieById(int? id) =>
-      (super.noSuchMethod(Invocation.method(#getMovieById, [id]),
+  _i7.Future<_i14.WatchlistTable?> getWatchListById(
+      int? id, _i21.DataType type) =>
+      (super.noSuchMethod(Invocation.method(#getMovieById, [id, type]),
               returnValue: Future<_i14.WatchlistTable?>.value())
           as _i7.Future<_i14.WatchlistTable?>);
   @override
-  _i7.Future<List<_i14.WatchlistTable>> getWatchlistMovies() => (super.noSuchMethod(
-          Invocation.method(#getWatchlistMovies, []),
+  _i7.Future<List<_i14.WatchlistTable>> getWatchlistMovies() =>
+      (super.noSuchMethod(Invocation.method(#getWatchlistMovies, []),
           returnValue: Future<List<_i14.WatchlistTable>>.value(<_i14.WatchlistTable>[]))
       as _i7.Future<List<_i14.WatchlistTable>>);
 }
@@ -340,7 +352,8 @@ class MockDatabaseHelper extends _i1.Mock implements _i15.DatabaseHelper {
       (super.noSuchMethod(Invocation.method(#removeWatchlist, [movie]),
           returnValue: Future<int>.value(0)) as _i7.Future<int>);
   @override
-  _i7.Future<Map<String, dynamic>?> getMovieById(int? id) =>
+  _i7.Future<Map<String, dynamic>?> getWatchlistById(
+      int? id, _i21.DataType type) =>
       (super.noSuchMethod(Invocation.method(#getMovieById, [id]),
               returnValue: Future<Map<String, dynamic>?>.value())
           as _i7.Future<Map<String, dynamic>?>);

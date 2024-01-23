@@ -3,6 +3,7 @@ import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/watchlist.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -38,12 +39,15 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
-final testWatchlistMovie = Movie.watchlist(
+final testWatchlistMovie = Watchlist(
   id: 1,
   title: 'title',
-  posterPath: 'posterPath',
+  path: 'posterPath',
   overview: 'overview',
+  type: DataType.Movie.index,
 );
+
+final testWatchList = [testWatchlistMovie];
 
 final testMovieTable = WatchlistTable(
   id: 1,

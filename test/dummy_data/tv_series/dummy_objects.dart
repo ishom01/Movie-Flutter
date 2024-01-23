@@ -60,6 +60,17 @@ final tvSeriesSeason = SeasonModel(
   voteAverage: 10.0
 );
 
+final tvSeriesSeason2 = SeasonModel(
+    airDate: "2012-12-12",
+    episodeCount: 2,
+    id: 2,
+    name: "Season 2",
+    overview: "Overview season 2",
+    posterPath: "path.jpg",
+    seasonNumber: 2,
+    voteAverage: 10.0
+);
+
 final tvSeriesEpisode2 = EpisodeModel(
     airDate: "2012-12-12",
     episodeNumber: 2,
@@ -75,6 +86,8 @@ final tvSeriesEpisode2 = EpisodeModel(
     voteAverage: 5.0,
     voteCount: 1
 );
+
+final tvEpisodes = [tvSeriesEpisode1, tvSeriesEpisode2];
 
 final testSeriesDetail = TvSeriesDetailResponse(
   adult: false,
@@ -106,6 +119,7 @@ final testSeriesDetail = TvSeriesDetailResponse(
   popularity: 2.0,
   posterPath: "path.jpg",
   seasons: [
+    tvSeriesSeason2,
     tvSeriesSeason
   ],
   status: "Status",

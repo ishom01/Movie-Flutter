@@ -15,10 +15,7 @@ void main() {
   setUp(() {
     mockMovieRepository = MockMovieRepository();
     mockTvSeriesRepository = MockTvSeriesRepository();
-    usecase = SaveWatchlist(
-      movieRepository: mockMovieRepository,
-      seriesRepository: mockTvSeriesRepository
-    );
+    usecase = SaveWatchlist(mockMovieRepository,mockTvSeriesRepository);
   });
 
   test('should save movie to the repository', () async {

@@ -75,9 +75,11 @@ class TvSeriesDetailResponse extends Equatable {
     inProduction: json["in_production"],
     languages: List<String>.from(json["languages"].map((x) => x)),
     lastAirDate: json["last_air_date"],
-    lastEpisodeToAir: EpisodeModel.fromJson(json["last_episode_to_air"]),
+    lastEpisodeToAir: json["last_episode_to_air"] != null
+        ? EpisodeModel.fromJson(json["last_episode_to_air"]) : null,
     name: json["name"],
-    nextEpisodeToAir: EpisodeModel.fromJson(json["next_episode_to_air"]),
+    nextEpisodeToAir: json["next_episode_to_air"] != null
+        ? EpisodeModel.fromJson(json["next_episode_to_air"]) : null,
     numberOfEpisodes: json["number_of_episodes"],
     numberOfSeasons: json["number_of_seasons"],
     originalLanguage: json["original_language"],

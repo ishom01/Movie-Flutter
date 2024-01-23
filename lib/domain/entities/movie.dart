@@ -17,13 +17,6 @@ class Movie extends Equatable {
     required this.voteCount,
   });
 
-  Movie.watchlist({
-    required this.id,
-    required this.overview,
-    required this.posterPath,
-    required this.title,
-  });
-
   bool? adult;
   String? backdropPath;
   List<int>? genreIds;
@@ -35,6 +28,7 @@ class Movie extends Equatable {
   String? releaseDate;
   String? title;
   bool? video;
+  int? type;
   double? voteAverage;
   int? voteCount;
 

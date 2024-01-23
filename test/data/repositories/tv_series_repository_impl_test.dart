@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/common/failure.dart';
+import 'package:ditonton/common/home_enum.dart';
 import 'package:ditonton/data/datasources/tv_series_remote_data_source.dart';
 import 'package:ditonton/data/datasources/watch_list_local_data_source.dart';
+import 'package:ditonton/data/models/movie_table.dart';
 import 'package:ditonton/data/repositories/tv_series_repository_impl.dart';
 import 'package:ditonton/domain/repositories/tv_series_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,6 +22,11 @@ void main() {
 
   var seriesList = testSeriesList.map((e) => e.toEntity());
   var seriesDetailEntity = testSeriesDetail.toEntity();
+  var episodeMaps = {
+    tvSeriesSeason.toEntity(): tvEpisodes.map((e) => e.toEntity()).toList(),
+    tvSeriesSeason2.toEntity(): tvEpisodes.map((e) => e.toEntity()).toList()
+  };
+  var watchlistTable = WatchlistTable.fromSeriesEntity(seriesDetailEntity);
 
   setUp(() {
     remoteDataSource = MockTvSeriesRemoteDataSource();
@@ -204,6 +211,104 @@ void main() {
         });
   });
 
+  group('Search Series', () {
+    final query = "Sample";
+
+    test('should return remote data when call success', () async {
+      when(remoteDataSource.searchSeries(query))
+          .thenAnswer((_) async => testSeriesList);
+
+      final result = await repository.searchSeries(query);
+      verify(remoteDataSource.searchSeries(query));
+
+      final resultList = result.getOrElse(() => []);
+      expect(resultList, seriesList);
+    });
+
+    test(
+        'should return server failure when the call to remote data source failed',
+            () async {
+          when(remoteDataSource.searchSeries(query))
+              .thenThrow(ServerException());
+
+          final result = await repository.searchSeries(query);
+          verify(remoteDataSource.searchSeries(query));
+
+          expect(
+              result,
+              equals(Left(ServerFailure('')))
+          );
+        });
+
+    test(
+        'should return server failure when device is not connected to internet',
+            () async {
+          when(remoteDataSource.searchSeries(query))
+              .thenThrow(SocketException('Failed to connect to the network'));
+
+          final result = await repository.searchSeries(query);
+          verify(remoteDataSource.searchSeries(query));
+
+          expect(
+              result,
+              equals(Left(ConnectionFailure('Failed to connect to the network')))
+          );
+        });
+  });
+
+  group('Get episodes series', () {
+    final id = testSeriesDetail.id;
+    final seasonId = 1;
+    final seasonId2 = 2;
+
+    test('should return remote data when call success', () async {
+      when(remoteDataSource.getEpisodes(id, seasonId))
+          .thenAnswer((_) async => tvEpisodes);
+      when(remoteDataSource.getEpisodes(id, seasonId2))
+          .thenAnswer((_) async => tvEpisodes);
+
+      final result = await repository.getEpisodes(testSeriesDetail.toEntity());
+      verify(remoteDataSource.getEpisodes(id, seasonId));
+      verify(remoteDataSource.getEpisodes(id, seasonId2));
+
+      final resultList = result.getOrElse(() => {});
+      expect(resultList, episodeMaps);
+    });
+
+    test(
+        'should return server failure when the call to remote data source failed',
+            () async {
+          when(remoteDataSource.getEpisodes(id, seasonId))
+              .thenThrow(ServerException());
+
+          final result = await repository.getEpisodes(
+              testSeriesDetail.toEntity());
+          verify(remoteDataSource.getEpisodes(id, seasonId));
+
+          expect(
+              result,
+              equals(Left(ServerFailure('')))
+          );
+        });
+
+    test(
+        'should return server failure when device is not connected to internet',
+            () async {
+          when(remoteDataSource.getEpisodes(id, seasonId))
+              .thenThrow(SocketException('Failed to connect to the network'));
+
+          final result = await repository.getEpisodes(
+              testSeriesDetail.toEntity());
+          verify(remoteDataSource.getEpisodes(id, seasonId));
+
+          expect(
+              result,
+              equals(Left(ConnectionFailure(
+                  'Failed to connect to the network')))
+          );
+        });
+  });
+
   group('Detail Series', () {
     var id = 1;
 
@@ -246,5 +351,78 @@ void main() {
               equals(Left(ConnectionFailure('Failed to connect to the network')))
           );
         });
+  });
+
+  group('Check Is Added to Watchlist', () {
+
+    test('should return local data has added in watchlist', () async {
+      when(localDataSource.getWatchListById(watchlistTable.id,
+          DataType.TvSeries))
+          .thenAnswer((_) async => watchlistTable);
+
+      final result = await repository.isAddedToWatchlist(watchlistTable.id);
+      verify(localDataSource.getWatchListById(watchlistTable.id,
+          DataType.TvSeries));
+
+      expect(result, equals(true));
+    });
+
+    test('should return local data not has added in watchlist', () async {
+      when(localDataSource.getWatchListById(watchlistTable.id,
+          DataType.TvSeries))
+          .thenAnswer((_) async => null);
+
+      final result = await repository.isAddedToWatchlist(watchlistTable.id);
+      verify(localDataSource.getWatchListById(watchlistTable.id,
+          DataType.TvSeries));
+
+      expect(result, equals(false));
+    });
+  });
+
+  group('Remove Watchlist', () {
+
+    test('should return success when success', () async {
+      when(localDataSource.removeWatchlist(watchlistTable))
+          .thenAnswer((_) async => "success");
+
+      final result = await repository.removeWatchlist(seriesDetailEntity);
+      verify(localDataSource.removeWatchlist(watchlistTable));
+
+      expect(result, equals(Right("success")));
+    });
+
+    test('should failed when query database', () async {
+      when(localDataSource.removeWatchlist(watchlistTable))
+          .thenThrow(DatabaseException(''));
+
+      final result = await repository.removeWatchlist(seriesDetailEntity);
+      verify(localDataSource.removeWatchlist(watchlistTable));
+
+      expect(result, equals(Left(DatabaseFailure(''))));
+    });
+  });
+
+  group('Insert Watchlist', () {
+
+    test('should return success when success', () async {
+      when(localDataSource.insertWatchlist(watchlistTable))
+          .thenAnswer((_) async => "success");
+
+      final result = await repository.saveWatchlist(seriesDetailEntity);
+      verify(localDataSource.insertWatchlist(watchlistTable));
+
+      expect(result, equals(Right("success")));
+    });
+
+    test('should failed when query database', () async {
+      when(localDataSource.insertWatchlist(watchlistTable))
+          .thenThrow(DatabaseException(''));
+
+      final result = await repository.saveWatchlist(seriesDetailEntity);
+      verify(localDataSource.insertWatchlist(watchlistTable));
+
+      expect(result, equals(Left(DatabaseFailure(''))));
+    });
   });
 }

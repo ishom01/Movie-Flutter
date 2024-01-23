@@ -6,9 +6,10 @@ import 'package:flutter/cupertino.dart';
 class PopularSeriesNotifier extends ChangeNotifier {
   final GetPopularSeries getPopularSeries;
 
-  PopularSeriesNotifier({required this.getPopularSeries});
+  PopularSeriesNotifier(this.getPopularSeries);
 
   RequestState _state = RequestState.Empty;
+
   RequestState get state => _state;
 
   List<TvSeries> _series = [];

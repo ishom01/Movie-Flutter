@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-01-23 22:35:08</td>
+            <td class="headerValue">2024-01-24 22:48:01</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -97,7 +97,7 @@
 <span id="L35"><span class="lineNum">      35</span>              :   final double voteAverage;</span>
 <span id="L36"><span class="lineNum">      36</span>              :   final int voteCount;</span>
 <span id="L37"><span class="lineNum">      37</span>              : </span>
-<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC tlaBgGNC">           6 :   TvSeriesDetailResponse({</span></span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaGNC tlaBgGNC">           8 :   TvSeriesDetailResponse({</span></span>
 <span id="L39"><span class="lineNum">      39</span>              :     required this.adult,</span>
 <span id="L40"><span class="lineNum">      40</span>              :     required this.backdropPath,</span>
 <span id="L41"><span class="lineNum">      41</span>              :     required this.episodeRunTime,</span>
@@ -186,31 +186,31 @@
 <span id="L124"><span class="lineNum">     124</span> <span class="tlaGNC">           1 :     &quot;vote_count&quot;: voteCount,</span></span>
 <span id="L125"><span class="lineNum">     125</span>              :   };</span>
 <span id="L126"><span class="lineNum">     126</span>              : </span>
-<span id="L127"><span class="lineNum">     127</span> <span class="tlaGNC">           4 :   TvSeriesDetail toEntity() =&gt;</span></span>
-<span id="L128"><span class="lineNum">     128</span> <span class="tlaGNC">           4 :       TvSeriesDetail(</span></span>
-<span id="L129"><span class="lineNum">     129</span> <span class="tlaGNC">           4 :           adult: adult,</span></span>
-<span id="L130"><span class="lineNum">     130</span> <span class="tlaGNC">           4 :           backdropPath: backdropPath,</span></span>
-<span id="L131"><span class="lineNum">     131</span> <span class="tlaGNC">           4 :           firstAirDate: firstAirDate,</span></span>
-<span id="L132"><span class="lineNum">     132</span> <span class="tlaGNC">          20 :           genres: genres.map((x) =&gt; x.toEntity()).toList(),</span></span>
-<span id="L133"><span class="lineNum">     133</span> <span class="tlaGNC">           4 :           homepage: homepage,</span></span>
-<span id="L134"><span class="lineNum">     134</span> <span class="tlaGNC">           4 :           id: id,</span></span>
-<span id="L135"><span class="lineNum">     135</span> <span class="tlaGNC">           4 :           languages: languages,</span></span>
-<span id="L136"><span class="lineNum">     136</span> <span class="tlaGNC">           4 :           lastAirDate: lastAirDate,</span></span>
-<span id="L137"><span class="lineNum">     137</span> <span class="tlaGNC">           7 :           lastEpisodeToAir: lastEpisodeToAir?.toEntity(),</span></span>
-<span id="L138"><span class="lineNum">     138</span> <span class="tlaGNC">           4 :           name: name,</span></span>
-<span id="L139"><span class="lineNum">     139</span> <span class="tlaGNC">           7 :           nextEpisodeToAir: nextEpisodeToAir?.toEntity(),</span></span>
-<span id="L140"><span class="lineNum">     140</span> <span class="tlaGNC">           4 :           numberOfEpisodes: numberOfEpisodes,</span></span>
-<span id="L141"><span class="lineNum">     141</span> <span class="tlaGNC">           4 :           numberOfSeasons: numberOfSeasons,</span></span>
-<span id="L142"><span class="lineNum">     142</span> <span class="tlaGNC">           4 :           originalName: originalName,</span></span>
-<span id="L143"><span class="lineNum">     143</span> <span class="tlaGNC">           4 :           overview: overview,</span></span>
-<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">           4 :           popularity: popularity,</span></span>
-<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">           4 :           posterPath: posterPath,</span></span>
-<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">          18 :           seasons: seasons.map((x) =&gt; x.toEntity()).toList(),</span></span>
-<span id="L147"><span class="lineNum">     147</span> <span class="tlaGNC">           4 :           status: status,</span></span>
-<span id="L148"><span class="lineNum">     148</span> <span class="tlaGNC">           4 :           tagline: tagline,</span></span>
-<span id="L149"><span class="lineNum">     149</span> <span class="tlaGNC">           4 :           type: type,</span></span>
-<span id="L150"><span class="lineNum">     150</span> <span class="tlaGNC">           4 :           voteAverage: voteAverage,</span></span>
-<span id="L151"><span class="lineNum">     151</span> <span class="tlaGNC">           4 :           voteCount: voteCount</span></span>
+<span id="L127"><span class="lineNum">     127</span> <span class="tlaGNC">           6 :   TvSeriesDetail toEntity() =&gt;</span></span>
+<span id="L128"><span class="lineNum">     128</span> <span class="tlaGNC">           6 :       TvSeriesDetail(</span></span>
+<span id="L129"><span class="lineNum">     129</span> <span class="tlaGNC">           6 :           adult: adult,</span></span>
+<span id="L130"><span class="lineNum">     130</span> <span class="tlaGNC">           6 :           backdropPath: backdropPath,</span></span>
+<span id="L131"><span class="lineNum">     131</span> <span class="tlaGNC">           6 :           firstAirDate: firstAirDate,</span></span>
+<span id="L132"><span class="lineNum">     132</span> <span class="tlaGNC">          30 :           genres: genres.map((x) =&gt; x.toEntity()).toList(),</span></span>
+<span id="L133"><span class="lineNum">     133</span> <span class="tlaGNC">           6 :           homepage: homepage,</span></span>
+<span id="L134"><span class="lineNum">     134</span> <span class="tlaGNC">           6 :           id: id,</span></span>
+<span id="L135"><span class="lineNum">     135</span> <span class="tlaGNC">           6 :           languages: languages,</span></span>
+<span id="L136"><span class="lineNum">     136</span> <span class="tlaGNC">           6 :           lastAirDate: lastAirDate,</span></span>
+<span id="L137"><span class="lineNum">     137</span> <span class="tlaGNC">          11 :           lastEpisodeToAir: lastEpisodeToAir?.toEntity(),</span></span>
+<span id="L138"><span class="lineNum">     138</span> <span class="tlaGNC">           6 :           name: name,</span></span>
+<span id="L139"><span class="lineNum">     139</span> <span class="tlaGNC">          11 :           nextEpisodeToAir: nextEpisodeToAir?.toEntity(),</span></span>
+<span id="L140"><span class="lineNum">     140</span> <span class="tlaGNC">           6 :           numberOfEpisodes: numberOfEpisodes,</span></span>
+<span id="L141"><span class="lineNum">     141</span> <span class="tlaGNC">           6 :           numberOfSeasons: numberOfSeasons,</span></span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaGNC">           6 :           originalName: originalName,</span></span>
+<span id="L143"><span class="lineNum">     143</span> <span class="tlaGNC">           6 :           overview: overview,</span></span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaGNC">           6 :           popularity: popularity,</span></span>
+<span id="L145"><span class="lineNum">     145</span> <span class="tlaGNC">           6 :           posterPath: posterPath,</span></span>
+<span id="L146"><span class="lineNum">     146</span> <span class="tlaGNC">          28 :           seasons: seasons.map((x) =&gt; x.toEntity()).toList(),</span></span>
+<span id="L147"><span class="lineNum">     147</span> <span class="tlaGNC">           6 :           status: status,</span></span>
+<span id="L148"><span class="lineNum">     148</span> <span class="tlaGNC">           6 :           tagline: tagline,</span></span>
+<span id="L149"><span class="lineNum">     149</span> <span class="tlaGNC">           6 :           type: type,</span></span>
+<span id="L150"><span class="lineNum">     150</span> <span class="tlaGNC">           6 :           voteAverage: voteAverage,</span></span>
+<span id="L151"><span class="lineNum">     151</span> <span class="tlaGNC">           6 :           voteCount: voteCount</span></span>
 <span id="L152"><span class="lineNum">     152</span>              :       );</span>
 <span id="L153"><span class="lineNum">     153</span>              : </span>
 <span id="L154"><span class="lineNum">     154</span> <span class="tlaGNC">           2 :   @override</span></span>

@@ -262,12 +262,14 @@ void main() {
     final seasonId2 = 2;
 
     test('should return remote data when call success', () async {
+      when(remoteDataSource.getSeriesDetail(id))
+          .thenAnswer((_) async => testSeriesDetail);
       when(remoteDataSource.getEpisodes(id, seasonId))
           .thenAnswer((_) async => tvEpisodes);
       when(remoteDataSource.getEpisodes(id, seasonId2))
           .thenAnswer((_) async => tvEpisodes);
 
-      final result = await repository.getEpisodes(testSeriesDetail.toEntity());
+      final result = await repository.getEpisodes(id);
       verify(remoteDataSource.getEpisodes(id, seasonId));
       verify(remoteDataSource.getEpisodes(id, seasonId2));
 
@@ -278,12 +280,14 @@ void main() {
     test(
         'should return server failure when the call to remote data source failed',
             () async {
+          when(remoteDataSource.getSeriesDetail(id))
+              .thenThrow(ServerException());
           when(remoteDataSource.getEpisodes(id, seasonId))
               .thenThrow(ServerException());
 
-          final result = await repository.getEpisodes(
-              testSeriesDetail.toEntity());
-          verify(remoteDataSource.getEpisodes(id, seasonId));
+          final result = await repository.getEpisodes(id);
+          verify(remoteDataSource.getSeriesDetail(id));
+          verifyNever(remoteDataSource.getEpisodes(id, seasonId));
 
           expect(
               result,
@@ -294,12 +298,14 @@ void main() {
     test(
         'should return server failure when device is not connected to internet',
             () async {
+          when(remoteDataSource.getSeriesDetail(id))
+              .thenThrow(SocketException('Failed to connect to the network'));
           when(remoteDataSource.getEpisodes(id, seasonId))
               .thenThrow(SocketException('Failed to connect to the network'));
 
-          final result = await repository.getEpisodes(
-              testSeriesDetail.toEntity());
-          verify(remoteDataSource.getEpisodes(id, seasonId));
+          final result = await repository.getEpisodes(id);
+          verify(remoteDataSource.getSeriesDetail(id));
+          verifyNever(remoteDataSource.getEpisodes(id, seasonId));
 
           expect(
               result,

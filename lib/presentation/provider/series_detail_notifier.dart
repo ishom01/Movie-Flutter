@@ -63,13 +63,17 @@ class SeriesDetailNotifier extends ChangeNotifier {
     notifyListeners();
     final detailResult = await getTvSeriesDetail.execute(id);
     final recommendationResult = await getSeriesRecommendations.execute(id);
+    final episodeResult = await getSeriesEpisodes.execute(id);
+
     detailResult.fold(
       (failure) {
         _seriesState = RequestState.Error;
+        _seasonsState = RequestState.Error;
+        _recommendationState = RequestState.Error;
         _message = failure.message;
         notifyListeners();
       },
-      (series) async {
+      (series) {
         _recommendationState = RequestState.Loading;
         _seasonsState = RequestState.Loading;
         _seriesState = RequestState.Loaded;
@@ -89,7 +93,6 @@ class SeriesDetailNotifier extends ChangeNotifier {
           },
         );
 
-        final episodeResult = await getSeriesEpisodes.execute(series);
         episodeResult.fold(
           (failure) {
             _seasonsState = RequestState.Error;

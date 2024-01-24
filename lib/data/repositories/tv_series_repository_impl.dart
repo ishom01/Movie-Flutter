@@ -125,12 +125,15 @@ class TvSeriesRepositoryImpl extends TvSeriesRepository {
     }
   }
 
+
+
   @override
   Future<Either<Failure, Map<Season, List<Episode>>>> getEpisodes(
-      TvSeriesDetail detail) async {
+      int id) async {
     try {
       final Map<Season, List<Episode>> seasonMaps = {};
-      final seasons = detail.seasons;
+      final detail = await remoteDataSource.getSeriesDetail(id);
+      final seasons = detail.seasons.map((e) => e.toEntity()).toList();
       seasons.sort((season1, season2) =>
           season1.seasonNumber.compareTo(season2.seasonNumber));
       for (int i = 0; i < detail.seasons.length; i++) {

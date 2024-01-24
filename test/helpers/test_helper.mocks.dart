@@ -24,6 +24,8 @@ import 'package:ditonton/data/models/episode_model.dart' as _i16;
 import 'package:ditonton/domain/entities/movie.dart' as _i9;
 import 'package:ditonton/domain/entities/tv_series.dart' as _i9;
 import 'package:ditonton/domain/entities/watchlist.dart' as _i9;
+import 'package:ditonton/domain/entities/season.dart' as _i9;
+import 'package:ditonton/domain/entities/episode.dart' as _i9;
 import 'package:ditonton/domain/entities/movie_detail.dart' as _i10;
 import 'package:ditonton/domain/entities/tv_series_detail.dart' as _i10;
 import 'package:ditonton/domain/repositories/movie_repository.dart' as _i6;
@@ -196,6 +198,16 @@ class MockTvSeriesRepository extends _i1.Mock
   _i7.Future<bool> isAddedToWatchlist(int id) =>
       (super.noSuchMethod(Invocation.method(#isAddedToWatchlist, [id]),
           returnValue: Future<bool>.value(false)) as _i7.Future<bool>);
+
+  @override
+  _i7.Future<_i2.Either<_i8.Failure,
+      Map<_i9.Season, List<_i9.Episode>>>> getEpisodes(int id) =>
+      (super.noSuchMethod(Invocation.method(#getEpisodes, [id]),
+          returnValue: Future<_i2.Either<_i8.Failure,
+              Map<_i9.Season, List<_i9.Episode>>>>.value(
+              _FakeEither<_i8.Failure, Map<_i9.Season,
+                  List<_i9.Episode>>>())) as _i7
+          .Future<_i2.Either<_i8.Failure, Map<_i9.Season, List<_i9.Episode>>>>);
 }
 
 /// A class which mocks [MovieRemoteDataSource].

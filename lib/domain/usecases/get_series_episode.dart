@@ -10,8 +10,7 @@ class GetSeriesEpisodes {
 
   GetSeriesEpisodes(this.repository);
 
-  Future<Either<Failure, Map<Season, List<Episode>>>> execute(
-      TvSeriesDetail detail) async {
-    return await repository.getEpisodes(detail);
+  Future<Either<Failure, Map<Season, List<Episode>>>> execute(int id) async {
+    return await repository.getEpisodes(id);
   }
 }

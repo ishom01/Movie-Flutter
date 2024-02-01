@@ -1,5 +1,5 @@
 import 'package:ditonton/common/home_enum.dart';
-import 'package:ditonton/domain/usecases/get_watchlist_status.dart';
+import 'package:core/domain/usecase/get_watchlist_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

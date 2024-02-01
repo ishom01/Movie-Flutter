@@ -13,7 +13,7 @@ import 'package:ditonton/domain/entities/tv_series.dart' as _i7;
 import 'package:ditonton/domain/repositories/tv_series_repository.dart' as _i2;
 import 'package:ditonton/domain/usecases/get_tv_series_detail.dart' as _i4;
 import 'package:ditonton/domain/usecases/get_series_recommendations.dart' as _i4;
-import 'package:ditonton/domain/usecases/get_series_episode.dart' as _i4;
+import '../../../tv_series/lib/domain/usecase/get_series_episode.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values

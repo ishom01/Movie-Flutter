@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:ditonton/data/models/episode_model.dart';
-import 'package:ditonton/data/models/episode_response.dart';
-import 'package:ditonton/data/models/movie_model.dart';
-import 'package:ditonton/data/models/movie_response.dart';
+import '../../../core/lib/data/models/episode_model.dart';
+import '../../../core/lib/data/models/episode_response.dart';
+import 'package:movie/data/models/movie_model.dart';
+import 'package:movie/data/models/movie_response.dart';
 import 'package:ditonton/data/models/season_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 

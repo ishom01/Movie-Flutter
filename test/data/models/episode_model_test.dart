@@ -1,4 +1,4 @@
-import 'package:ditonton/data/models/episode_model.dart';
+import '../../../core/lib/data/models/episode_model.dart';
 import 'package:ditonton/domain/entities/episode.dart';
 import 'package:flutter_test/flutter_test.dart';
 

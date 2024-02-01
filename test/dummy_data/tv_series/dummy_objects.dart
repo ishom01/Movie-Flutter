@@ -1,8 +1,8 @@
-import 'package:ditonton/data/models/episode_model.dart';
+import '../../../core/lib/data/models/episode_model.dart';
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/season_model.dart';
 import 'package:ditonton/data/models/tv_series_detail_model.dart';
-import 'package:ditonton/data/models/tv_series_model.dart';
+import '../../../core/lib/data/models/tv_series_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 
 final testTvSeries = TvSeriesModel(

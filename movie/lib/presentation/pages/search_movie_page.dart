@@ -1,4 +1,5 @@
 import 'package:core/common/constants.dart';
+import 'package:core/domain/entities/movie.dart';
 import 'package:core/presentation/widgets/state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,17 +41,22 @@ class SearchMoviePage extends StatelessWidget {
             ),
             BlocBuilder<MovieSearchBloc, MovieSearchState>(
               builder: (context, state) {
-                return StateContent(
-                    state: state.movieState,
-                    builder: (data) {
-                      return ListView.builder(
-                        itemBuilder: (context, index) {
-                          final movie = data[index];
-                          return MovieCard(movie);
-                        },
-                        itemCount: data.length,
-                      );
-                    }
+                return  Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: StateContent<List<Movie>>(
+                        state: state.movieState,
+                        builder: (data) {
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              final movie = data[index];
+                              return MovieCard(movie);
+                            },
+                            itemCount: data.length,
+                          );
+                        }
+                    ),
+                  )
                 );
               },
             ),

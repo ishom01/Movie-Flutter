@@ -87,6 +87,9 @@ class TvSeriesRepositoryImpl extends TvSeriesRepository {
   Future<Either<Failure, List<TvSeries>>> searchSeries(String query) async {
     try {
       final result = await remoteDataSource.searchSeries(query);
+      if (result.isEmpty) {
+        return Left(ServerFailure('Result not founded'));
+      }
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));

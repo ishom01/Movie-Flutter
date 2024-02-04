@@ -4,9 +4,11 @@ import 'package:equatable/equatable.dart';
 
 class SeriesSearchState extends Equatable {
   final UiState<List<TvSeries>> seriesState;
+  final String key;
 
   const SeriesSearchState({
     required this.seriesState,
+    required this.key,
   });
 
   @override
@@ -16,15 +18,18 @@ class SeriesSearchState extends Equatable {
 
   SeriesSearchState copyWith({
     UiState<List<TvSeries>>? seriesState,
+    String? key,
   }) {
     return SeriesSearchState(
       seriesState: seriesState ?? this.seriesState,
+      key: key ?? this.key,
     );
   }
 
   factory SeriesSearchState.initial() {
     return const SeriesSearchState(
-      seriesState: LoadingUiState(),
+      seriesState: ErrorUiState("Please fill search bar to search.."),
+      key: "",
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:core/common/constants.dart';
+import 'package:core/domain/entities/tv_series.dart';
 import 'package:core/presentation/widgets/state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,17 +40,22 @@ class SearchSeriesPage extends StatelessWidget {
             ),
             BlocBuilder<SeriesSearchBloc, SeriesSearchState>(
               builder: (context, state) {
-                return StateContent(
-                    state: state.seriesState,
-                    builder: (data) {
-                      return ListView.builder(
-                        itemBuilder: (context, index) {
-                          final series = data[index];
-                          return SeriesCard(series);
-                        },
-                        itemCount: data.length,
-                      );
-                    }
+                return  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: StateContent(
+                          state: state.seriesState,
+                          builder: (data) {
+                            return ListView.builder(
+                              itemBuilder: (context, index) {
+                                final movie = data[index];
+                                return SeriesCard(movie);
+                              },
+                              itemCount: data.length,
+                            );
+                          },
+                      ),
+                    ),
                 );
               },
             ),

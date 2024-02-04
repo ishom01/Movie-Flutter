@@ -9,15 +9,13 @@ class SeriesDetailState extends Equatable {
   final UiState<TvSeriesDetail> detailState;
   final UiState<List<TvSeries>> recommendationState;
   final UiState<Map<Season, List<Episode>>> seasonState;
-  final String watchlistMessage;
-  final bool isAddedFavorite;
+  final bool isFavorite;
 
   const SeriesDetailState({
     required this.detailState,
     required this.recommendationState,
     required this.seasonState,
-    required this.watchlistMessage,
-    required this.isAddedFavorite,
+    required this.isFavorite,
   });
 
   @override
@@ -25,23 +23,20 @@ class SeriesDetailState extends Equatable {
     detailState,
     recommendationState,
     seasonState,
-    watchlistMessage,
-    isAddedFavorite,
+    isFavorite,
   ];
 
   SeriesDetailState copyWith({
     UiState<TvSeriesDetail>? detailState,
     UiState<List<TvSeries>>? recommendationState,
     UiState<Map<Season, List<Episode>>>? seasonState,
-    String? watchlistMessage,
-    bool? isAddedFavorite,
+    bool? isFavorite,
   }) {
     return SeriesDetailState(
       detailState: detailState ?? this.detailState,
       recommendationState: recommendationState ?? this.recommendationState,
       seasonState: seasonState ?? this.seasonState,
-      watchlistMessage: watchlistMessage ?? this.watchlistMessage,
-      isAddedFavorite: isAddedFavorite ?? this.isAddedFavorite,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
@@ -50,8 +45,7 @@ class SeriesDetailState extends Equatable {
       detailState: LoadingUiState(),
       recommendationState: LoadingUiState(),
       seasonState: LoadingUiState(),
-      watchlistMessage: "",
-      isAddedFavorite: false,
+      isFavorite: false,
     );
   }
 }

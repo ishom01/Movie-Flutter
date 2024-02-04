@@ -8,15 +8,15 @@ import 'genre_model.dart';
 
 class TvSeriesDetailResponse extends Equatable {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> episodeRunTime;
-  final String firstAirDate;
+  final String? firstAirDate;
   final List<GenreModel> genres;
-  final String homepage;
+  final String? homepage;
   final int id;
   final bool inProduction;
   final List<String> languages;
-  final String lastAirDate;
+  final String? lastAirDate;
   final EpisodeModel? lastEpisodeToAir;
   final String name;
   final EpisodeModel? nextEpisodeToAir;
@@ -26,7 +26,7 @@ class TvSeriesDetailResponse extends Equatable {
   final String originalName;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final List<SeasonModel> seasons;
   final String status;
   final String tagline;

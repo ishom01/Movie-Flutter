@@ -1,3 +1,4 @@
+import 'package:core/domain/entities/tv_series.dart';
 import 'package:core/presentation/widgets/state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,7 @@ class _NowPlayingSeriesPageState extends State<NowPlayingSeriesPage> {
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: StateContent(
+              child: StateContent<List<TvSeries>>(
                 state: state.seriesState,
                 builder: (data) {
                   return ListView.builder(

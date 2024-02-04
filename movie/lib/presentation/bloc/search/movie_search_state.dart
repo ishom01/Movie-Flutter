@@ -30,7 +30,7 @@ class MovieSearchState extends Equatable {
   factory MovieSearchState.initial() {
     return const MovieSearchState(
       key: "",
-      movieState: LoadingUiState(),
+      movieState: ErrorUiState("Please fill search bar to search.."),
     );
   }
 }

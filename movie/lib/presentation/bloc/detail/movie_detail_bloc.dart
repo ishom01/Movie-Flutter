@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:core/common/data_state.dart';
 import 'package:core/common/home_enum.dart';
 import 'package:core/domain/usecase/get_watchlist_status.dart';
@@ -11,9 +13,6 @@ import 'package:movie/presentation/bloc/detail/movie_detail_state.dart';
 import '../../../domain/usecase/get_movie_detail.dart';
 
 class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
-  static const watchlistAddSuccessMessage = 'Added to Watchlist';
-  static const watchlistRemoveSuccessMessage = 'Removed from Watchlist';
-
   final GetMovieDetail detail;
   final GetMovieRecommendations recommendations;
   final GetWatchListStatus watchListStatus;
@@ -38,6 +37,8 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         (success) => emit(state.copyWith(
             movieState: SuccessUiState(success))),
       );
+
+      add(LoadWatchlistDetailEvent(event.id));
     });
 
     on<FetchRecommendationMovieDetailEvent>((event, emit) async {
@@ -53,19 +54,11 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
     on<ChangeWatchlistDetailEvent>((event, emit) async {
       if (event.isWatchlist) {
-        final result = await saveWatchlist.saveMovie(event.movie);
-        result.fold(
-          (failed) => emit(state.copyWith(watchlistMessage: failed.message)),
-          (success) => emit(state.copyWith(watchlistMessage: success)),
-        );
+        await saveWatchlist.saveMovie(event.movie);
       } else {
-        final result = await removeWatchlist.removeMovie(event.movie);
-        result.fold(
-          (failed) => emit(state.copyWith(watchlistMessage: failed.message)),
-          (success) => emit(state.copyWith(watchlistMessage: success)),
-        );
+        await removeWatchlist.removeMovie(event.movie);
       }
-      add(LoadWatchlistDetailEvent(event.movie.id));
+      emit(state.copyWith(isAddedFavorite: event.isWatchlist));
     });
 
     on<LoadWatchlistDetailEvent>((event, emit) async {

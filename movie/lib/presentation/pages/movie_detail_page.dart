@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
 import 'package:core/common/data_state.dart';
@@ -42,11 +44,11 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             return Center(child: Text(state.movieState.message ?? ""));
           } else {
             final movie = state.movieState.data!;
+            log("Debug message -- $state");
             return SafeArea(
               child: _DetailContent(
                 movie,
                 state.recommendationState,
-                state.watchlistMessage,
                 state.isAddedFavorite,
               ),
             );
@@ -60,13 +62,11 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 class _DetailContent extends StatelessWidget {
   final MovieDetail movie;
   final UiState<List<Movie>> recommendationState;
-  final String message;
   final bool isAddedWatchlist;
 
   const _DetailContent(
     this.movie,
     this.recommendationState,
-    this.message,
     this.isAddedWatchlist
   );
 
@@ -118,21 +118,12 @@ class _DetailContent extends StatelessWidget {
                                         movie
                                     ));
 
-                                if (message == MovieDetailBloc
-                                        .watchlistAddSuccessMessage ||
-                                    message == MovieDetailBloc
-                                        .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(message)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
-                                }
+                                String message = !isAddedWatchlist
+                                    ? 'Add watchlist success'
+                                    : 'Removed from Watchlist';
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(message)));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -185,10 +176,10 @@ class _DetailContent extends StatelessWidget {
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      final movie = recommendationState.data![index];
+                                      final movie = data[index];
                                       return Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: InkWell(
+                                        child: GestureDetector(
                                           onTap: () {
                                             Navigator.pushReplacementNamed(
                                               context,

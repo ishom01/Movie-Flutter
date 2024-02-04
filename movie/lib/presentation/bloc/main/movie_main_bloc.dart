@@ -19,7 +19,6 @@ class MovieMainBloc extends Bloc<MovieMainEvent, MovieMainState> {
   ): super(MovieMainState.initial()) {
 
     on<MovieMainPopularEvent>((event, emit) async {
-      emit(state.copyWith(popularState: const LoadingUiState()));
       final result = await popularMovies.execute();
       result.fold(
         (failed) => emit(state.copyWith(
@@ -30,7 +29,6 @@ class MovieMainBloc extends Bloc<MovieMainEvent, MovieMainState> {
     });
 
     on<MovieMainTopRatedEvent>((event, emit) async {
-      emit(state.copyWith(topRatedState: const LoadingUiState()));
       final result = await topRatedMovies.execute();
       result.fold(
         (failed) => emit(state.copyWith(
@@ -41,7 +39,6 @@ class MovieMainBloc extends Bloc<MovieMainEvent, MovieMainState> {
     });
 
     on<MovieMainNowPlayingEvent>((event, emit) async {
-      emit(state.copyWith(nowPlayingState: const LoadingUiState()));
       final result = await nowPlayingMovies.execute();
       result.fold(
         (failed) => emit(state.copyWith(

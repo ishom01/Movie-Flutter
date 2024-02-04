@@ -6,13 +6,13 @@ import 'genre.dart';
 
 class TvSeriesDetail extends Equatable {
   final bool adult;
-  final String backdropPath;
-  final String firstAirDate;
+  final String? backdropPath;
+  final String? firstAirDate;
   final List<Genre> genres;
-  final String homepage;
+  final String? homepage;
   final int id;
   final List<String> languages;
-  final String lastAirDate;
+  final String? lastAirDate;
   final Episode? lastEpisodeToAir;
   final String name;
   final Episode? nextEpisodeToAir;
@@ -21,7 +21,7 @@ class TvSeriesDetail extends Equatable {
   final String originalName;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final List<Season> seasons;
   final String status;
   final String tagline;

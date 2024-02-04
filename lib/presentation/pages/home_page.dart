@@ -1,20 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/home_enum.dart';
-import 'package:ditonton/domain/entities/movie.dart';
+import 'package:core/common/home_enum.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:movie/presentation/pages/movie_page.dart';
-import 'package:movie/presentation/pages/popular_movies_page.dart';
-import 'package:movie/presentation/pages/search_movie_page.dart';
-import 'package:ditonton/presentation/pages/search_series_page.dart';
-import 'package:movie/presentation/pages/top_rated_movies_page.dart';
-import 'package:ditonton/presentation/pages/tv_series_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:movie/presentation/pages/movie_page.dart';
+import 'package:movie/presentation/pages/search_movie_page.dart';
+import 'package:tv_series/presentation/pages/search_series_page.dart';
+import 'package:tv_series/presentation/pages/tv_series_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -66,7 +57,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
               },
             ),
             ListTile(

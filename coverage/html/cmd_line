@@ -1,1 +1,1 @@
-genhtml coverage/lcov.info -o coverage/html
+genhtml --ignore-errors empty coverage/lcov.info -o coverage/html

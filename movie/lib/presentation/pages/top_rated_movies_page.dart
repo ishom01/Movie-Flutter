@@ -1,3 +1,4 @@
+import 'package:core/domain/entities/movie.dart';
 import 'package:core/presentation/widgets/state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
           builder: (context, state) {
-            return StateContent(
+            return StateContent<List<Movie>>(
                 state: state.movieState,
                 builder: (data) {
                   return ListView.builder(

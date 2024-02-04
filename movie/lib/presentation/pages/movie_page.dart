@@ -38,7 +38,7 @@ class _MoviePageState extends State<MoviePage> {
                 'Now Playing',
                 style: kHeading6,
               ),
-              StateContent(
+              StateContent<List<Movie>>(
                   state: state.nowPlayingState,
                   builder: (data) {
                     return _MovieList(data);
@@ -49,7 +49,7 @@ class _MoviePageState extends State<MoviePage> {
                 onTap: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
-              StateContent(
+              StateContent<List<Movie>>(
                 state: state.popularState,
                 builder: (data) {
                   return _MovieList(data);
@@ -60,7 +60,7 @@ class _MoviePageState extends State<MoviePage> {
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
-              StateContent(
+              StateContent<List<Movie>>(
                 state: state.topRatedState,
                 builder: (data) {
                   return _MovieList(data);
@@ -81,7 +81,7 @@ class _MoviePageState extends State<MoviePage> {
           title,
           style: kHeading6,
         ),
-        InkWell(
+        GestureDetector(
           onTap: onTap,
           child: const Padding(
             padding: EdgeInsets.all(8.0),
@@ -110,7 +110,7 @@ class _MovieList extends StatelessWidget {
           final movie = movies[index];
           return Container(
             padding: const EdgeInsets.all(8),
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
                   context,

@@ -25,7 +25,7 @@ class StateContent<T> extends StatelessWidget {
     } else if (state.isError) {
       return Text(state.message ?? "");
     } else {
-      return builder(T as T);
+      return builder(state.data as T);
     }
   }
 }

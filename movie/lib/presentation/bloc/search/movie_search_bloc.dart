@@ -13,7 +13,7 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
   ): super(MovieSearchState.initial()) {
 
     on<MovieSearchEvent>((event, emit) async {
-      emit(state.copyWith(movieState: const LoadingUiState()));
+      emit(state.copyWith(key: event.key, movieState: const LoadingUiState()));
       final result = await searchMovies.execute(event.key);
       result.fold(
         (failed) => emit(state.copyWith(

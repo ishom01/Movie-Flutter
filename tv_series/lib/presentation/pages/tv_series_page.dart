@@ -84,7 +84,7 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
           title,
           style: kHeading6,
         ),
-        InkWell(
+        GestureDetector(
           onTap: onTap,
           child: const Padding(
             padding: EdgeInsets.all(8.0),
@@ -113,7 +113,7 @@ class _SeriesList extends StatelessWidget {
           final series = seriesList[index];
           return Container(
             padding: const EdgeInsets.all(8),
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(
                   context,

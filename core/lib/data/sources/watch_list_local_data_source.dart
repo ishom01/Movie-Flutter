@@ -1,7 +1,7 @@
 import '../../common/exception.dart';
 import '../../common/home_enum.dart';
-import '../db/database_helper.dart';
 import '../models/movie_table.dart';
+import 'db/database_helper.dart';
 
 abstract class WatchListLocalDataSource {
   Future<String> insertWatchlist(WatchlistTable movie);

@@ -31,6 +31,17 @@ class FetchRecommendationSeriesDetailEvent extends SeriesDetailEvent {
   ];
 }
 
+class FetchEpisodeEvent extends SeriesDetailEvent {
+  final int id;
+
+  const FetchEpisodeEvent(this.id);
+
+  @override
+  List<Object?> get props => [
+    id,
+  ];
+}
+
 class ChangeWatchlistDetailEvent extends SeriesDetailEvent {
   final bool isWatchlist;
   final TvSeriesDetail detail;

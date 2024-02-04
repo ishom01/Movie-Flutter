@@ -1,15 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/entities/tv_series_detail.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/series_detail_notifier.dart';
-import 'package:ditonton/presentation/widgets/series_season_list.dart';
+import 'package:core/common/constants.dart';
+import 'package:core/common/data_state.dart';
+import 'package:core/domain/entities/episode.dart';
+import 'package:core/domain/entities/genre.dart';
+import 'package:core/domain/entities/season.dart';
+import 'package:core/domain/entities/tv_series.dart';
+import 'package:core/domain/entities/tv_series_detail.dart';
+import 'package:core/presentation/widgets/state_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
+import 'package:tv_series/presentation/bloc/detail/series_detail_bloc.dart';
+import 'package:tv_series/presentation/bloc/detail/series_detail_event.dart';
+import 'package:tv_series/presentation/bloc/detail/series_detail_state.dart';
+
+import '../widgets/series_season_list.dart';
 
 class SeriesDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/series/detail';
@@ -25,51 +30,50 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<SeriesDetailNotifier>(context, listen: false)
-          ..fetchSeriesDetail(widget.id)
-          ..loadWatchlistStatus(widget.id);
-    });
+    context.read<SeriesDetailBloc>()
+      ..add(FetchSeriesDetailEvent(widget.id))
+      ..add(FetchRecommendationSeriesDetailEvent(widget.id))
+      ..add(FetchEpisodeEvent(widget.id));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<SeriesDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.seriesState == RequestState.Loading) {
-            return Center(
-              child: CircularProgressIndicator(),
+      body: SafeArea(
+        child: BlocBuilder<SeriesDetailBloc, SeriesDetailState>
+          (builder: (context, state) {
+            return StateContent<TvSeriesDetail>(
+              state: state.detailState,
+              builder: (data) {
+                return _DetailContent(
+                  data,
+                  state.recommendationState,
+                  state.seasonState,
+                  false,
+                  state.isFavorite,
+                );
+              },
             );
-          } else if (provider.seriesState == RequestState.Loaded) {
-            return SafeArea(
-              child: DetailContent(
-                provider.detail,
-                provider.seriesRecommendations,
-                false,
-                provider.isAddedToWatchlist,
-              ),
-            );
-          } else {
-            return Text(provider.message);
-          }
-        },
+          },
+        ),
       ),
     );
   }
 }
 
-class DetailContent extends StatelessWidget {
+class _DetailContent extends StatelessWidget {
   final TvSeriesDetail series;
-  final List<TvSeries> recommendations;
+  final UiState<List<TvSeries>> recommendationsState;
+  final UiState<Map<Season, List<Episode>>> seasonMapState;
   final bool isExpandedEpisode;
-  final bool isAddedWatchlist;
+  final bool isFavorite;
 
-  DetailContent(
+  const _DetailContent(
       this.series,
-      this.recommendations,
+      this.recommendationsState,
+      this.seasonMapState,
       this.isExpandedEpisode,
-      this.isAddedWatchlist
+      this.isFavorite
   );
 
   @override
@@ -80,17 +84,17 @@ class DetailContent extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: 'https://image.tmdb.org/t/p/w500${series.posterPath}',
           width: screenWidth,
-          placeholder: (context, url) => Center(
+          placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
           ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
             builder: (context, scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kRichBlack,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
@@ -114,48 +118,26 @@ class DetailContent extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                if (!isAddedWatchlist) {
-                                  await Provider.of<SeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(series);
-                                } else {
-                                  await Provider.of<SeriesDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(series);
-                                }
+                                context.read<SeriesDetailBloc>().add(
+                                    ChangeWatchlistDetailEvent(
+                                        !isFavorite,
+                                        series
+                                    ));
 
-                                final message =
-                                    Provider.of<SeriesDetailNotifier>(context,
-                                            listen: false)
-                                        .watchlistMessage;
+                                String message = !isFavorite
+                                    ? 'Add watchlist success'
+                                    : 'Removed from Watchlist';
 
-                                if (message ==
-                                        MovieDetailNotifier
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        MovieDetailNotifier
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(message)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
-                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(message)));
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  isAddedWatchlist
-                                      ? Icon(Icons.check)
-                                      : Icon(Icons.add),
-                                  Text('Watchlist'),
+                                  isFavorite
+                                      ? const Icon(Icons.check)
+                                      : const Icon(Icons.add),
+                                  const Text('Watchlist'),
                                 ],
                               ),
                             ),
@@ -167,7 +149,7 @@ class DetailContent extends StatelessWidget {
                                 RatingBarIndicator(
                                   rating: series.voteAverage / 2,
                                   itemCount: 5,
-                                  itemBuilder: (context, index) => Icon(
+                                  itemBuilder: (context, index) => const Icon(
                                     Icons.star,
                                     color: kMikadoYellow,
                                   ),
@@ -176,7 +158,7 @@ class DetailContent extends StatelessWidget {
                                 Text('${series.voteAverage}')
                               ],
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               'Overview',
                               style: kHeading6,
@@ -184,122 +166,96 @@ class DetailContent extends StatelessWidget {
                             Text(
                               series.overview,
                             ),
-                            SizedBox(height: 16),
-                            Consumer<SeriesDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.seasonState == RequestState.Loading) {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12),
-                                      child: CircularProgressIndicator(),
+                            const SizedBox(height: 16),
+                            StateContent(
+                              state: seasonMapState,
+                              builder: (data) {
+                                return Column(
+                                  children: [
+                                    SeriesSeasonsList(
+                                      seasonMaps: data,
+                                      isExpanded: false,
                                     ),
-                                  );
-                                } else if (data.seasonState ==
-                                    RequestState.Error) {
-                                  return Text(data.message);
-                                } else if (data.seasonState ==
-                                    RequestState.Loaded) {
-                                  return Column(
-                                    children: [
-                                      SeriesSeasonsList(
-                                        seasonMaps: data.seasonMaps,
-                                        isExpanded: false,
-                                      ),
-                                      SizedBox(height: 16),
-                                      TextButton(
-                                        style: ButtonStyle(
+                                    const SizedBox(height: 16),
+                                    TextButton(
+                                      style: ButtonStyle(
                                           backgroundColor: MaterialStateProperty
-                                            .all(Colors.yellow)
-                                        ),
-                                        onPressed:() {
-                                          showModalBottomSheet<void>(
-                                              context: context,
-                                              isScrollControlled: true,
-                                              builder: (BuildContext context) {
-                                                return Padding(
-                                                  padding: EdgeInsets.all(16),
-                                                  child: SeriesSeasonsList(
-                                                    seasonMaps: data.seasonMaps,
-                                                    isExpanded: true,
-                                                  ),
-                                                );
-                                              }
-                                          );
-                                        },
-                                        child: Text(
-                                          "Show More",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black
-                                          ),
+                                              .all(Colors.yellow)
+                                      ),
+                                      onPressed:() {
+                                        showModalBottomSheet<void>(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (BuildContext context) {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(16),
+                                                child: SeriesSeasonsList(
+                                                  seasonMaps: data,
+                                                  isExpanded: true,
+                                                ),
+                                              );
+                                            }
+                                        );
+                                      },
+                                      child: const Text(
+                                        "Show More",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black
                                         ),
                                       ),
-                                      SizedBox(height: 24),
-                                    ],
-                                  );
-                                } else {
-                                  return Container();
-                                }
+                                    ),
+                                    const SizedBox(height: 24),
+                                  ],
+                                );
                               },
                             ),
                             Text(
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            Consumer<SeriesDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.recommendationState ==
-                                    RequestState.Loading) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (data.recommendationState ==
-                                    RequestState.Error) {
-                                  return Text(data.message);
-                                } else if (data.recommendationState ==
-                                    RequestState.Loaded) {
-                                  return Container(
-                                    height: 150,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final series = recommendations[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                context,
-                                                SeriesDetailPage.ROUTE_NAME,
-                                                arguments: series.id,
-                                              );
-                                            },
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(8),
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${series.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(Icons.error),
-                                              ),
+                            StateContent(
+                              state: recommendationsState,
+                              builder: (data) {
+                                return SizedBox(
+                                  height: 150,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      final series = data[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushReplacementNamed(
+                                              context,
+                                              SeriesDetailPage.ROUTE_NAME,
+                                              arguments: series.id,
+                                            );
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(8),
+                                            ),
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                              'https://image.tmdb.org/t/p/w500${series.posterPath}',
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                    child:
+                                                    CircularProgressIndicator(),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                  const Icon(Icons.error),
                                             ),
                                           ),
-                                        );
-                                      },
-                                      itemCount: recommendations.length,
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
+                                        ),
+                                      );
+                                    },
+                                    itemCount: data.length,
+                                  ),
+                                );
                               },
                             ),
                           ],
@@ -329,7 +285,7 @@ class DetailContent extends StatelessWidget {
             backgroundColor: kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -343,7 +299,7 @@ class DetailContent extends StatelessWidget {
   String _showGenres(List<Genre> genres) {
     String result = '';
     for (var genre in genres) {
-      result += genre.name + ', ';
+      result += '${genre.name}, ';
     }
 
     if (result.isEmpty) {

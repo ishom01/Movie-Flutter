@@ -6,13 +6,11 @@ import 'package:equatable/equatable.dart';
 class MovieDetailState extends Equatable {
   final UiState<MovieDetail> movieState;
   final UiState<List<Movie>> recommendationState;
-  final String watchlistMessage;
   final bool isAddedFavorite;
 
   const MovieDetailState({
     required this.movieState,
     required this.recommendationState,
-    required this.watchlistMessage,
     required this.isAddedFavorite,
   });
 
@@ -26,13 +24,11 @@ class MovieDetailState extends Equatable {
   MovieDetailState copyWith({
     UiState<MovieDetail>? movieState,
     UiState<List<Movie>>? recommendationState,
-    String? watchlistMessage,
     bool? isAddedFavorite,
   }) {
     return MovieDetailState(
       movieState: movieState ?? this.movieState,
       recommendationState: recommendationState ?? this.recommendationState,
-      watchlistMessage: watchlistMessage ?? this.watchlistMessage,
       isAddedFavorite: isAddedFavorite ?? this.isAddedFavorite,
     );
   }
@@ -41,7 +37,6 @@ class MovieDetailState extends Equatable {
     return const MovieDetailState(
       movieState: LoadingUiState(),
       recommendationState: LoadingUiState(),
-      watchlistMessage: "",
       isAddedFavorite: false
     );
   }

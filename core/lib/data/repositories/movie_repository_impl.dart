@@ -85,6 +85,9 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
     try {
       final result = await remoteDataSource.searchMovies(query);
+      if (result.isEmpty) {
+        return Left(ServerFailure('Result not founded'));
+      }
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure(''));
@@ -102,7 +105,7 @@ class MovieRepositoryImpl implements MovieRepository {
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -126,6 +129,9 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, List<Watchlist>>> getWatchlistMovies() async {
     final result = await localDataSource.getWatchlistMovies();
+    if (result.isEmpty) {
+      return Left(DatabaseFailure("Watchlist is empty"));
+    }
     return Right(result.map((data) => data.toEntity()).toList());
   }
 }

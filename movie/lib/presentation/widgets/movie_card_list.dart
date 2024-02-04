@@ -14,7 +14,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(
             context,

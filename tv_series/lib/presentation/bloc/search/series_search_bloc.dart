@@ -14,7 +14,10 @@ class SeriesSearchBloc
   ): super(SeriesSearchState.initial()) {
 
     on<SeriesSearchEvent>((event, emit) async {
-      emit(state.copyWith(seriesState: const LoadingUiState()));
+      emit(state.copyWith(
+        seriesState: const LoadingUiState(),
+        key: event.key,
+      ));
       final result = await searchSeries.execute(event.key);
       result.fold(
         (failed) => emit(state.copyWith(

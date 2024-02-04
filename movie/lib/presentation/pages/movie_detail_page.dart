@@ -44,7 +44,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             return Center(child: Text(state.movieState.message ?? ""));
           } else {
             final movie = state.movieState.data!;
-            log("Debug message -- $state");
             return SafeArea(
               child: _DetailContent(
                 movie,

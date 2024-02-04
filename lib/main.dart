@@ -22,8 +22,14 @@ import 'package:tv_series/presentation/pages/search_series_page.dart';
 import 'package:tv_series/presentation/pages/series_detail_page.dart';
 import 'package:tv_series/presentation/pages/top_rated_series_page.dart';
 import 'package:tv_series/tv_series.dart' as tvSeries;
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'common/ssl_pining.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SSLPinning.init();
+  await Firebase.initializeApp();
   core.init();
   tvSeries.init();
   movie.init();

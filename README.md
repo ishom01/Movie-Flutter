@@ -2,6 +2,7 @@
 # Flutter Movie
 
 This is submission project for dicoding flutter expert
+
 [![Codemagic build status](https://api.codemagic.io/apps/65bf128e37f95e49fb728618/65bf128e37f95e49fb728617/status_badge.svg)](https://codemagic.io/apps/65bf128e37f95e49fb728618/65bf128e37f95e49fb728617/latest_build)
 
 ## Documents

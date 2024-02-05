@@ -6,8 +6,8 @@ This is submission project for dicoding flutter expert
 
 ## Documents
 
-- [Codemagic](https://codemagic.io/app/65bf128e37f95e49fb728618/build/65bf44399faa8970ff7ddce9)
-- [Firebase Analythic](https://github.com/matiassingers/awesome-readme)
+- [Codemagic](https://github.com/ishom01/Movie-Flutter/blob/modularization/assets/codemagic.png)
+- [Firebase Analythic](https://github.com/ishom01/Movie-Flutter/blob/modularization/assets/analytic.png)
 
 
 ## API References

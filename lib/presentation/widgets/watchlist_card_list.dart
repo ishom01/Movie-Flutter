@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/home_enum.dart';
-import 'package:ditonton/domain/entities/watchlist.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/series_detail_page.dart';
+import 'package:core/common/constants.dart';
+import 'package:core/common/home_enum.dart';
+import 'package:core/domain/entities/watchlist.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/presentation/pages/movie_detail_page.dart';
+import 'package:tv_series/presentation/pages/series_detail_page.dart';
 
 class WatchlistCard extends StatelessWidget {
   final Watchlist watchlist;
@@ -15,7 +15,7 @@ class WatchlistCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           if (watchlist.type == DataType.Movie.index) {
             Navigator.pushNamed(

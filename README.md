@@ -7,9 +7,9 @@ This is submission project for dicoding flutter expert
 
 ## Documents
 
-- [Codemagic](https://github.com/ishom01/Movie-Flutter/blob/modularization/assets/codemagic.png)
-- [Firebase Analythic](https://github.com/ishom01/Movie-Flutter/blob/modularization/assets/analytic.png)
-- [Firebase Crashlytic](https://github.com/ishom01/Movie-Flutter/blob/modularization/assets/crashlytic.png)
+- [Codemagic](https://github.com/ishom01/Movie-Flutter/blob/master/assets/codemagic.png)
+- [Firebase Analythic](https://github.com/ishom01/Movie-Flutter/blob/master/assets/analytic.png)
+- [Firebase Crashlytic](https://github.com/ishom01/Movie-Flutter/blob/master/assets/crashlytic.png)
 
 
 ## API References

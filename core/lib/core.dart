@@ -1,11 +1,11 @@
 library core;
 
+import 'package:core/common/ssl_pining.dart';
 import 'package:core/domain/usecase/get_watchlist.dart';
 import 'package:core/domain/usecase/get_watchlist_status.dart';
 import 'package:core/domain/usecase/remove_watchlist.dart';
 import 'package:core/domain/usecase/save_watchlist.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 
 import 'data/repositories/movie_repository_impl.dart';
 import 'data/repositories/tv_series_repository_impl.dart';
@@ -63,5 +63,5 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => SSLPinning.client);
 }

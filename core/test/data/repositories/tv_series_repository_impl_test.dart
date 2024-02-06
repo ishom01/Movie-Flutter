@@ -225,6 +225,16 @@ void main() {
       expect(resultList, seriesList);
     });
 
+    test('should return remote data when but its empty', () async {
+      when(remoteDataSource.searchSeries(query))
+          .thenAnswer((_) async => []);
+
+      final result = await repository.searchSeries(query);
+      verify(remoteDataSource.searchSeries(query));
+
+      expect(result, Left(ServerFailure('Result not founded')));
+    });
+
     test(
         'should return server failure when the call to remote data source failed',
             () async {

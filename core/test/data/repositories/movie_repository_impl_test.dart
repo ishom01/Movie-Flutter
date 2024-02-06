@@ -313,10 +313,20 @@ void main() {
       // act
       final result = await repository.searchMovies(tQuery);
       // assert
-      /* workaround to test List in Right. Issue: https://github.com/spebbe/dartz/issues/80 */
       final resultList = result.getOrElse(() => []);
       expect(resultList, tMovieList);
     });
+
+    test('should return movie list when call to data source but empty',
+            () async {
+          // arrange
+          when(mockRemoteDataSource.searchMovies(tQuery))
+              .thenAnswer((_) async => []);
+          // act
+          final result = await repository.searchMovies(tQuery);
+          // assert
+          expect(result, Left(ServerFailure('Result not founded')));
+        });
 
     test('should return ServerFailure when call to data source is unsuccessful',
         () async {
@@ -410,6 +420,16 @@ void main() {
       // assert
       final resultList = result.getOrElse(() => []);
       expect(resultList, [testWatchlistMovie]);
+    });
+
+    test('should return list of Movies but empty', () async {
+      // arrange
+      when(mockLocalDataSource.getWatchlistMovies())
+          .thenAnswer((_) async => []);
+      // act
+      final result = await repository.getWatchlistMovies();
+      // assert
+      expect(result, Left(DatabaseFailure("Watchlist is empty")));
     });
   });
 }

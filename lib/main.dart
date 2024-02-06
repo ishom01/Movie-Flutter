@@ -1,4 +1,5 @@
 import 'package:core/common/constants.dart';
+import 'package:core/common/ssl_pining.dart';
 import 'package:core/common/utils.dart';
 import 'package:core/core.dart' as core;
 import 'package:ditonton/injection.dart' as di;
@@ -23,8 +24,6 @@ import 'package:tv_series/presentation/pages/series_detail_page.dart';
 import 'package:tv_series/presentation/pages/top_rated_series_page.dart';
 import 'package:tv_series/tv_series.dart' as tvSeries;
 import 'package:firebase_core/firebase_core.dart';
-
-import 'common/ssl_pining.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
